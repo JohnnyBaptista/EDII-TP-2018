@@ -14,7 +14,7 @@
 typedef enum boolean{TRUE, FALSE}boolean;
 
 typedef struct no_arvoreB {
-   boolean isFolha; //folha = TRUE, não folha = FALSE
+   int isFolha; //folha = 1, não folha = FALSE
    int numChaves; // Quantidades de chaves contida no nó
    int chaves[MAX_CHAVES]; //Chaves armazenadas no nó, id dos munícipios
    int filhos[MAX_FILHOS]; //Ponteiro para os filhos
@@ -22,10 +22,10 @@ typedef struct no_arvoreB {
 
 typedef struct dados{
   	int id;
-  	int cod;
-  	float area;
-  	char UF[2];
   	char nome[120];
+  	int cod;
+  	char UF[2];
+  	float area;
 }DADOS;
 
 #endif
