@@ -11,3 +11,6 @@
     - Imprimir o registro em processamento
     - Imprimir as chaves ao serem processadas
     - Imprimir o índice utilizado
+    
+##Árvore B+ Criada
+![alt text](https://raw.githubusercontent.com/JohnnyBaptista/EDII-TP-2018/dev/bplustree.png)
