@@ -1,59 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "oper.c"
 
 int main(){
 	
-	FILE *fp, *fp2, *fp3; //texto 
+	setlocale(LC_ALL, "Portuguese");
+	FILE *fp, *fp1, *fp2;
 	FILE *fb1, *fb2, *fb3; //binario
-	int i = 0, j = 0;
+	int i = 0, j = 0, res;
 	char grau;
 	char pos;
-	char txt1[10], txt2[10];
+	char txt1[14], txt2[14];
+	boolean test = FALSE;
 	DADOS *cidades[24];
 	DADOS *cidades2[24];
 	arvoreB *arv[8]; // 8 = grau máximo da árvore
 	arvoreB *arv2[8]; // 8 = grau máximo da árvore; auxiliar
 	//==========================================================||==========================================================\\
-
+	
 	fp = fopen("arq/config.txt", "r");
 	configRead(fp, &grau, &pos, txt1, txt2);
-	fp2 = fopen("arq/texto1.txt", "r");
-	fp3 = fopen("arq/texto2.txt", "r");
-	//iniciando arvore;
-	/*for (; i < 8; ++i){
-		arv[i]->isFolha = FALSE;
-		arv[i]->numChaves = 0;
-		for(; j < MAX_CHAVES; j++)
-			arv[i]->chaves[j] = 0;
-		for(j = 0; j < MAX_FILHOS; j++)
-			arv[i]->filhos[j] = 0;
-	}*/
-
+	printf("SELECIONE UMA DAS OPÇÕES:\n1-Criar arquivo Binário 1\n2-Criar Arquivo Binário 2\n");
+	scanf("%d", &res);
+	printf("Leitura do arquivo de configuração:\nGrau = %c\nPos = %c\nArq1 = %s\nArq2 = %s\n", grau, pos, txt1, txt2);
+	system("pause");
+	switch(res){
+		case 1:
+			system("cls"); 
+			fp1 = fopen("arq/texto1.txt", "r");
+			text1Read(fp1, arv);
+			fp1 = fopen("arq/binary1.txt", "wb+");
+			test = binary1Create(arv, fp1);
+			if (test == TRUE)
+				printf("Criação do arquivo feito com sucesso!\n");
+			system("pause");
+			system("cls");
+			printf("Deseja imprimir o arquivo binário? Sim = 1, Não = 0\n");
+			scanf("%d", &res);
+			if (res == 1){
+				fp1 = fopen("arq/binary1.txt", "rb");
+				binaryRead(fp1, arv2);
+			}
+			break;
+		case 2:
+			system("cls"); 
+			fb1 = fopen("arq/texto1.txt", "r");
+			text2Read(fb1, cidades);
+			fb1 = fopen("arq/binary2.txt", "wb+");
+			test = binary2Create(cidades, fb1);
+			if (test == TRUE)
+				printf("Criação do arquivo feito com sucesso!\n");
+			system("pause");
+			system("cls");
+			printf("Deseja imprimir o arquivo binário? Sim = 1, Não = 0\n");
+			scanf("%d", &res);
+			if (res == 1){
+				fp1 = fopen("arq/binary2.txt", "rb");
+				binaryRead2(fp1, cidades2);
+			}
+		default:
+			system("cls"); 
+			main();
+			break;
+	}
+	system("cls");
 	
-	printf("Grau = %c\nPos = %c\nArq1 = %s\nArq2 = %s\n", grau, pos, txt1, txt2);
+	if (res == 1)
+	{
+		printf("Qual deseja imprimir:\n1 - Arquivo binário 1\n2 - Arquivo binário 2\n");
+		scanf("%d", &res);
+		switch(res){
+			case 1:
+				
+				break;
+			case 2:
+				fp1 = fopen("arq/binary2.txt", "rb");
+				binaryRead2(fp1, cidades2);
+				break;
+			default: break;
+		}
+	}
 
-
-	// text1Read(fp2, arv);
-	text2Read(fp3, cidades);
-	// printStruct2(cidades);
-	fb2 = fopen("arq/binary2.txt", "wb+");
-	boolean test = binary2Create(cidades, fb2);
-	fflush(fb2);
-	fb2 = fopen("arq/binary2.txt","rb");
-	binaryRead2(fb2, cidades2);
-
-
-	// printStruct(arv);
-	// printf("IMPRIMINDO ARQUIVO BINARIO\n=================\n\n");
-	// fb1 = fopen("arq/binary1.txt", "wb+");
-	// binary1Create(arv, fb1);
-	/*//
-	// printf("%d\n", test);
-	*/
-	// fflush(fb1);
-	// fb1 = fopen("arq/binary1.txt", "rb");
-	// int test = binaryRead(fb1, arv2);	
-	// printf("%d\n", test);
 	return 0;
 }

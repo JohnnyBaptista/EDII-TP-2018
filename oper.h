@@ -8,5 +8,6 @@ boolean binary1Create(arvoreB **arv, FILE *fb);
 boolean binaryRead(FILE *fb, arvoreB **arv);
 boolean text2Read(FILE *fp, DADOS *cidades[]);
 boolean binary2Create(DADOS *cidades[], FILE *fp);
+boolean binaryRead2(FILE *fb, DADOS **cidades);
 
 #endif
